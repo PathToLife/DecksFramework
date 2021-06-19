@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "210920c0-8e39-4a98-a7b3-500634fc2138",
+		"name": "DecksFramework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Deck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)\r",
+							"postman.setEnvironmentVariable(\"deck_id\", jsonData.deck_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/deck/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deck",
+						"create"
+					],
+					"query": [
+						{
+							"key": "shuffle",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Draw Card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/deck/draw?uuid={{deck_id}}&count=52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deck",
+						"draw"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "{{deck_id}}"
+						},
+						{
+							"key": "count",
+							"value": "52"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Open Deck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/deck/open?uuid={{deck_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deck",
+						"open"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "{{deck_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
