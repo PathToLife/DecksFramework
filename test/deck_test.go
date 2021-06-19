@@ -7,10 +7,6 @@ import (
 	"testing"
 )
 
-/*
-TDD
- */
-
 func TestCardGeneration(t *testing.T) {
 	cards := decks.DefaultDeckCards()
 
