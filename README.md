@@ -1,9 +1,7 @@
 # Decks Framework
 Framework API to handle the deck and cards, built in Go with Gin HttpServer
 
-It is recommended to use the GoLand IDE with this project, however QuickStart commands for universal use are below
-
-Sole contributor: PathToLife, a NodeJS/React Full Stack developer :)
+Contributors: PathToLife, a NodeJS/React Full Stack developer :)
 
 # Quick Start
 
@@ -30,9 +28,9 @@ To Build
 
 Alternatively Postman Collection: [docs/DecksFramework.postman_collection.json](docs/DecksFramework.postman_collection.json)
 
-## Create Deck
+### Create Deck
 
-### POST `http://localhost:3000/deck/create`
+#### POST `http://localhost:3000/deck/create`
 
 Example Return
 
@@ -44,9 +42,9 @@ Example Return
 }
 ```
 
-## Open Deck
+### Open Deck
 
-### GET `http://localhost:3000/deck/open?uuid={{deck_id}}`
+#### GET `http://localhost:3000/deck/open?uuid={{deck_id}}`
 
 QueryParams
 - `uuid` deck_id from POST `/deck/create`
@@ -69,9 +67,9 @@ Example Return
 }
 ```
 
-## Draw Card
+### Draw Card
 
-### POST `http://localhost:3000/deck/draw?uuid={{deck_id}}&count=2`
+#### POST `http://localhost:3000/deck/draw?uuid={{deck_id}}&count=2`
 
 QueryParams
 - `uuid` deck_id from POST `/deck/create`
