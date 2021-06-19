@@ -60,9 +60,9 @@ func (d *Deck) ShuffleDeck() error {
 		return nil
 	}
 
-	for i := range d.Cards {
-		// we use crypto.rand to shuffle cards
-		j, err := SecureRandomInt(int64(len(d.Cards)))
+	// Fisher-Yates shuffle algorithm
+	for i := len(d.Cards) - 1; i > 0; i-- {
+		j, err := SecureRandomInt(int64(i + 1))
 		if err != nil {
 			return err
 		}

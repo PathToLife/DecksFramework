@@ -5,6 +5,9 @@ Framework API to handle the deck and cards, built in Go with Gin HttpServer
 
 Contributors: PathToLife, a NodeJS/React Full Stack developer :)
 
+### Features
+- Fair Card shuffling using crypto/rand + Fisher-Yates shuffle algorithm credits to [oldwestaction](https://medium.com/@oldwestaction/randomness-is-hard-e085decbcbb2)
+
 # Quick Start
 
 Edit/Create .env file in the project root if needed, an example is below
@@ -64,7 +67,7 @@ Example Return
       "suit": "SPADES",
       "code": "AS"
     },
-    ...
+    "..."
   ]
 }
 ```
