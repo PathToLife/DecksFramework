@@ -1,4 +1,6 @@
 # Decks Framework
+![cards.png](docs/cards.png)
+
 Framework API to handle the deck and cards, built in Go with Gin HttpServer
 
 Contributors: PathToLife, a NodeJS/React Full Stack developer :)
