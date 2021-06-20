@@ -15,12 +15,6 @@ Notes: Please branch out server routes into separate handler files when adding n
 Single file for now
 */
 
-func ErrorMsg(msg string) gin.H {
-	return gin.H{
-		"error": msg,
-	}
-}
-
 func httpServer(port string, debug bool) {
 	if debug == false {
 		gin.SetMode("release")
@@ -28,33 +22,35 @@ func httpServer(port string, debug bool) {
 
 	r := gin.Default()
 
-	// deck
+	// in memory deck storage
 	deckStore := decks.NewDeckStore()
 
 	r.POST("/deck/create", func(c *gin.Context) {
-		shuffle := false
-		shuffleQ := c.DefaultQuery("shuffle", "false")
+		shouldShuffleDeck := false
 
-		if strings.ToLower(shuffleQ) == "true" {
-			shuffle = true
+		// ?shouldShuffleDeck=true for deck shuffling
+		shuffleStr := c.DefaultQuery("shouldShuffleDeck", "false")
+		if strings.ToLower(shuffleStr) == "true" {
+			shouldShuffleDeck = true
 		}
 
 		var deck *decks.Deck
 
+		// ?cards=AS,2S,KH
 		if cardCodesStr, isCustom := c.GetQuery("cards"); isCustom {
 			if cardCodesStr == "" {
 				c.AbortWithStatusJSON(400, ErrorMsg("cards requires comma separated list of card codes"))
 				return
 			}
 			cardCodes := strings.Split(cardCodesStr, ",")
-			customDeck, err := decks.NewStandardPartialDeck(cardCodes, shuffle)
+			customDeck, err := decks.NewStandardPartialDeck(cardCodes, shouldShuffleDeck)
 			if err != nil {
 				c.AbortWithStatusJSON(500, ErrorMsg(err.Error()))
 				return
 			}
 			deck = customDeck
-		} else {
-			standardDeck, err := decks.NewStandardDeck(shuffle)
+		} else { // standard deck fi cards is not specified
+			standardDeck, err := decks.NewStandardDeck(shouldShuffleDeck)
 			if err != nil {
 				_ = c.AbortWithError(500, err)
 				return
@@ -73,14 +69,14 @@ func httpServer(port string, debug bool) {
 			return
 		}
 
-		countStr, ok := c.GetQuery("count")
+		countStr, ok := c.GetQuery("drawCount")
 		if !ok {
-			c.AbortWithStatusJSON(400, ErrorMsg("count required"))
+			c.AbortWithStatusJSON(400, ErrorMsg("drawCount required"))
 			return
 		}
-		count, err := strconv.Atoi(countStr)
+		drawCount, err := strconv.Atoi(countStr)
 		if err != nil {
-			c.AbortWithStatusJSON(400, ErrorMsg("count needs to be a number"))
+			c.AbortWithStatusJSON(400, ErrorMsg("drawCount needs to be a number"))
 			return
 		}
 
@@ -90,7 +86,7 @@ func httpServer(port string, debug bool) {
 			return
 		}
 
-		cards, err := deck.DrawCard(count)
+		cards, err := deck.DrawCard(drawCount)
 		if err != nil {
 			c.AbortWithStatusJSON(400, ErrorMsg(err.Error()))
 			return
@@ -122,5 +118,12 @@ func httpServer(port string, debug bool) {
 	if err != nil {
 		fmt.Println(err)
 		return
+	}
+}
+
+// ErrorMsg returns error message format for json
+func ErrorMsg(msg string) gin.H {
+	return gin.H{
+		"error": msg,
 	}
 }
