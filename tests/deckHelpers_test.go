@@ -1,8 +1,10 @@
-package test
+package tests
 
-import "decksframework/decks"
+import (
+	decks2 "decksframework/decks"
+)
 
-func CardsEqual(c1 []decks.Card, c2 []decks.Card) bool {
+func CardsEqual(c1 []decks2.Card, c2 []decks2.Card) bool {
 	if len(c1) != len(c2) {
 		return false
 	}

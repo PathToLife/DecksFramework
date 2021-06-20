@@ -1,6 +1,7 @@
-package main
+package server
 
 import (
+	"decksframework/db"
 	"decksframework/decks"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -16,16 +17,14 @@ Notes: Please branch out server routes into separate handler files when adding n
 Single file for now
 */
 
-var router *gin.Engine
-
-func startApiServer(port string, debug bool) {
+func StartApiServer(port string, debug bool) {
 	if debug == false {
 		gin.SetMode("release")
 	}
 
-	router = gin.Default()
+	router := gin.Default()
 
-	initializeRoutes()
+	InitializeRoutes(router)
 
 	// listen and serve
 	err := router.Run(":" + port)
@@ -34,8 +33,10 @@ func startApiServer(port string, debug bool) {
 	}
 }
 
-func initializeRoutes() {
-	router.POST("/deck/create", func(c *gin.Context) {
+func InitializeRoutes(r *gin.Engine) {
+	deckStore := db.GetDeckStore()
+
+	r.POST("/deck/create", func(c *gin.Context) {
 		shouldShuffleDeck := false
 
 		// ?shouldShuffleDeck=true for deck shuffling
@@ -72,7 +73,7 @@ func initializeRoutes() {
 		c.JSON(http.StatusCreated, deck.GetClosedDeck())
 	})
 
-	router.POST("/deck/draw", func(c *gin.Context) {
+	r.POST("/deck/draw", func(c *gin.Context) {
 		uuid, ok := c.GetQuery("uuid")
 		if !ok || uuid == "" {
 			c.AbortWithStatusJSON(http.StatusBadRequest, ErrorMsg("uuid required"))
@@ -107,7 +108,7 @@ func initializeRoutes() {
 		})
 	})
 
-	router.GET("/deck/open", func(c *gin.Context) {
+	r.GET("/deck/open", func(c *gin.Context) {
 		uuid, ok := c.GetQuery("uuid")
 		if !ok || uuid == "" {
 			c.AbortWithStatusJSON(http.StatusBadRequest, ErrorMsg("uuid required"))

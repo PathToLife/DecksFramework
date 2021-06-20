@@ -23,7 +23,7 @@ To Run Server (defaults to port 3000, will also download dependencies and build)
 
 To Run all tests
 
-`go test ./test`
+`go test ./tests`
 
 To Build
 

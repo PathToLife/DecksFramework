@@ -1,4 +1,4 @@
-package test
+package tests
 
 import (
 	"decksframework/decks"
@@ -228,7 +228,7 @@ func TestCustomDeck(t *testing.T) {
 
 func TestGenerateCards(t *testing.T) {
 
-	t.Run("extra card test", func(t *testing.T) {
+	t.Run("extra card tests", func(t *testing.T) {
 		extraCards := []decks.Card{
 			{
 				Value: "GodFather",
