@@ -23,7 +23,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/deck/create",
+					"raw": "http://localhost:3000/deck/create?cards=AS",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -38,6 +38,10 @@
 							"key": "shuffle",
 							"value": "true",
 							"disabled": true
+						},
+						{
+							"key": "cards",
+							"value": "AS"
 						}
 					]
 				}

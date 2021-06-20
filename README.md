@@ -37,6 +37,10 @@ Alternatively Postman Collection: [docs/DecksFramework.postman_collection.json](
 
 #### POST `http://localhost:3000/deck/create`
 
+QueryParams
+- `shuffle=<true | false>` shuffles the deck
+- `cards=AS,2S` comma separated list of cards
+
 Example Return
 
 ```json

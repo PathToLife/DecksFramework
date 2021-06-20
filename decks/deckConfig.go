@@ -2,6 +2,7 @@ package decks
 
 import (
 	"errors"
+	"fmt"
 )
 
 // DeckCardConfig configuration structure for a deck
@@ -23,7 +24,7 @@ var defaultDeckConfig = DeckCardConfig{
 // GenerateCards Generates all the cards for given DeckCardConfig
 // Output order is dependent on order of strings in config
 func GenerateCards(config DeckCardConfig) []Card {
-	numCards := len(config.CardSuits) * len(config.CardValues) + len(config.ExtraCards)
+	numCards := len(config.CardSuits)*len(config.CardValues) + len(config.ExtraCards)
 	cards := make([]Card, numCards, numCards)
 	i := 0
 	for _, cardSuit := range config.CardSuits {
@@ -63,7 +64,7 @@ func FindCard(cards []Card, cardCode string) (int, error) {
 		}
 	}
 
-	return -1, errors.New("card cardCode not found "  + cardCode)
+	return -1, errors.New(fmt.Sprintf("card cardCode not found '%s'", cardCode))
 }
 
 // SubDeck returns a subset of the given cards in the order specified by cardCodes param

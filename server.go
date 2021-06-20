@@ -39,10 +39,27 @@ func httpServer(port string, debug bool) {
 			shuffle = true
 		}
 
-		deck, err := decks.NewStandardDeck(shuffle)
-		if err != nil {
-			_ = c.AbortWithError(500, err)
-			return
+		var deck *decks.Deck
+
+		if cardCodesStr, isCustom := c.GetQuery("cards"); isCustom {
+			if cardCodesStr == "" {
+				c.AbortWithStatusJSON(400, ErrorMsg("cards requires comma separated list of card codes"))
+				return
+			}
+			cardCodes := strings.Split(cardCodesStr, ",")
+			customDeck, err := decks.NewStandardPartialDeck(cardCodes, shuffle)
+			if err != nil {
+				c.AbortWithStatusJSON(500, ErrorMsg(err.Error()))
+				return
+			}
+			deck = customDeck
+		} else {
+			standardDeck, err := decks.NewStandardDeck(shuffle)
+			if err != nil {
+				_ = c.AbortWithError(500, err)
+				return
+			}
+			deck = standardDeck
 		}
 
 		deckStore.AddDeck(deck)
