@@ -77,9 +77,9 @@ func (d *Deck) ShuffleDeck() error {
 // Close deck is a deck with deck.Cards hidden
 func (d *Deck) GetClosedDeck() ClosedDeck {
 	return ClosedDeck{
-		DeckId:     d.DeckId,
-		Shuffled:   d.Shuffled,
-		Remaining:  d.Remaining,
+		DeckId:    d.DeckId,
+		Shuffled:  d.Shuffled,
+		Remaining: d.Remaining,
 	}
 }
 
@@ -87,10 +87,10 @@ func (d *Deck) GetClosedDeck() ClosedDeck {
 // Open deck is a deck with deck.Cards shown
 func (d *Deck) GetOpenDeck() OpenDeck {
 	return OpenDeck{
-		DeckId:     d.DeckId,
-		Shuffled:   d.Shuffled,
-		Remaining:  d.Remaining,
-		Cards:      d.Cards,
+		DeckId:    d.DeckId,
+		Shuffled:  d.Shuffled,
+		Remaining: d.Remaining,
+		Cards:     d.Cards,
 	}
 }
 
@@ -100,7 +100,7 @@ func (d *Deck) setCards(c []Card) {
 	d.Remaining = len(d.Cards)
 }
 
-func NewDeck() Deck {
+func NewEmptyDeck() Deck {
 	return Deck{
 		DeckId:     uuid.NewString(),
 		Shuffled:   false,
@@ -112,7 +112,7 @@ func NewDeck() Deck {
 
 // NewStandardDeck generates a standard french 52 card deck without jokers
 func NewStandardDeck(shuffle bool) (*Deck, error) {
-	deck := NewDeck()
+	deck := NewEmptyDeck()
 	deck.setCards(DefaultDeckCards())
 
 	if shuffle {
@@ -129,7 +129,7 @@ func NewStandardDeck(shuffle bool) (*Deck, error) {
 // will duplicate cards if same cardCode is specified twice
 // returns error if cardCode is not found
 func NewStandardPartialDeck(cardCodes []string, shuffle bool) (*Deck, error) {
-	deck := NewDeck()
+	deck := NewEmptyDeck()
 
 	availableCards := DefaultDeckCards()
 	subDeck, err := SubDeck(availableCards, cardCodes)

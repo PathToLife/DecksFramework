@@ -5,7 +5,7 @@ import (
 	"math/big"
 )
 
-// SecureRandomInt return cryptographically secure int between {0, maxInt}
+// SecureRandomInt return cryptographically secure int between {0, maxInt - 1} inclusive
 // Used for shuffling Decks
 // Bit overkill, consider removing if seeding math/rand in main()
 func SecureRandomInt(maxInt int64) (int64, error) {
@@ -18,15 +18,15 @@ func SecureRandomInt(maxInt int64) (int64, error) {
 
 // OpenDeck for json of a open deck
 type OpenDeck struct {
-	DeckId     string `json:"deck_id"`
-	Shuffled   bool   `json:"shuffled"`
-	Remaining  int    `json:"remaining"` // len(Cards) number of cards able to be drawn
-	Cards      []Card `json:"cards"`     // cards able to be drawn
+	DeckId    string `json:"deck_id"`
+	Shuffled  bool   `json:"shuffled"`
+	Remaining int    `json:"remaining"` // len(Cards) number of cards able to be drawn
+	Cards     []Card `json:"cards"`     // cards able to be drawn
 }
 
 // ClosedDeck for json of a closed deck
 type ClosedDeck struct {
-	DeckId     string `json:"deck_id"`
-	Shuffled   bool   `json:"shuffled"`
-	Remaining  int    `json:"remaining"` // len(Cards) number of cards able to be drawn
+	DeckId    string `json:"deck_id"`
+	Shuffled  bool   `json:"shuffled"`
+	Remaining int    `json:"remaining"` // len(Cards) number of cards able to be drawn
 }
