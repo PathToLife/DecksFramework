@@ -69,14 +69,14 @@ func httpServer(port string, debug bool) {
 			return
 		}
 
-		countStr, ok := c.GetQuery("drawCount")
+		countStr, ok := c.GetQuery("count")
 		if !ok {
-			c.AbortWithStatusJSON(400, ErrorMsg("drawCount required"))
+			c.AbortWithStatusJSON(400, ErrorMsg("count required"))
 			return
 		}
 		drawCount, err := strconv.Atoi(countStr)
 		if err != nil {
-			c.AbortWithStatusJSON(400, ErrorMsg("drawCount needs to be a number"))
+			c.AbortWithStatusJSON(400, ErrorMsg("count needs to be a number"))
 			return
 		}
 
