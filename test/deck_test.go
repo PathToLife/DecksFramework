@@ -1,7 +1,7 @@
 package test
 
 import (
-	"decks/decks"
+	"decksframework/decks"
 	"github.com/google/uuid"
 	"strings"
 	"testing"

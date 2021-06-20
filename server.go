@@ -1,7 +1,7 @@
 package main
 
 import (
-	"decks/decks"
+	"decksframework/decks"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -13,7 +13,7 @@ A Gin Api Server :)
 
 Notes: Please branch out server routes into separate handler files when adding new functionality
 Single file for now
- */
+*/
 
 func ErrorMsg(msg string) gin.H {
 	return gin.H{

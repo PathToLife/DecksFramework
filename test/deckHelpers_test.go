@@ -1,6 +1,6 @@
 package test
 
-import "decks/decks"
+import "decksframework/decks"
 
 func CardsEqual(c1 []decks.Card, c2 []decks.Card) bool {
 	if len(c1) != len(c2) {

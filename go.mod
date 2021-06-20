@@ -1,4 +1,4 @@
-module decks
+module decksframework
 
 go 1.16
 
