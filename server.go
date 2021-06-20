@@ -15,17 +15,26 @@ Notes: Please branch out server routes into separate handler files when adding n
 Single file for now
 */
 
-func httpServer(port string, debug bool) {
+var router *gin.Engine
+
+func startApiServer(port string, debug bool) {
 	if debug == false {
 		gin.SetMode("release")
 	}
 
-	r := gin.Default()
+	router = gin.Default()
 
-	// in memory deck storage
-	deckStore := decks.NewDeckStore()
+	initializeRoutes()
 
-	r.POST("/deck/create", func(c *gin.Context) {
+	// listen and serve
+	err := router.Run(":" + port)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func initializeRoutes() {
+	router.POST("/deck/create", func(c *gin.Context) {
 		shouldShuffleDeck := false
 
 		// ?shouldShuffleDeck=true for deck shuffling
@@ -62,7 +71,7 @@ func httpServer(port string, debug bool) {
 		c.JSON(201, deck.GetClosedDeck())
 	})
 
-	r.POST("/deck/draw", func(c *gin.Context) {
+	router.POST("/deck/draw", func(c *gin.Context) {
 		uuid, ok := c.GetQuery("uuid")
 		if !ok || uuid == "" {
 			c.AbortWithStatusJSON(400, ErrorMsg("uuid required"))
@@ -97,7 +106,7 @@ func httpServer(port string, debug bool) {
 		})
 	})
 
-	r.GET("/deck/open", func(c *gin.Context) {
+	router.GET("/deck/open", func(c *gin.Context) {
 		uuid, ok := c.GetQuery("uuid")
 		if !ok || uuid == "" {
 			c.AbortWithStatusJSON(400, ErrorMsg("uuid required"))
@@ -112,13 +121,6 @@ func httpServer(port string, debug bool) {
 
 		c.JSON(200, deck.GetOpenDeck())
 	})
-
-	// listen and serve
-	err := r.Run(":" + port)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 }
 
 // ErrorMsg returns error message format for json

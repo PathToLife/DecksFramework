@@ -1,6 +1,7 @@
 package main
 
 import (
+	"decksframework/decks"
 	"github.com/joho/godotenv"
 	"os"
 	"strings"
@@ -19,10 +20,15 @@ func isDebug() bool {
 	return debugStr == "true"
 }
 
+var deckStore decks.DeckStore
+
 func main() {
 	// load .env files if set in directory
 	_ = godotenv.Load()
 
-	// config server and listen
-	httpServer(getServerPort(), isDebug())
+	// init in memory deck storage, replace with database call in future
+	deckStore = decks.NewDeckStore()
+
+	// start server and listen
+	startApiServer(getServerPort(), isDebug())
 }
