@@ -6,7 +6,7 @@ Framework API to handle the deck and cards, built in Go with Gin HttpServer
 Contributors: PathToLife
 
 ### Features
-- Fair Card shuffling using crypto/rand + Fisher-Yates shuffle algorithm credits to [oldwestaction](https://medium.com/@oldwestaction/randomness-is-hard-e085decbcbb2)
+- Fair Card shuffling using crypto/rand + Fisher-Yates shuffle algorithm [[oldwestaction](https://medium.com/@oldwestaction/randomness-is-hard-e085decbcbb2)]
 
 # Quick Start
 
